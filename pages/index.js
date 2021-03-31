@@ -15,7 +15,7 @@ function Home({router}) {
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-         <p>Cafe Estela is where we meet to be inspired to act on and continue acting on our dreams.</p>
+         <p>A community where those who identify as a woman can chat about and learn all-things blockchain. Sign up to stay updated on our upcoming events!</p>
        </section>
        {user && <GatheringsComponent invites={invites}/>}
     </Layout>

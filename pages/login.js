@@ -1,65 +1,67 @@
-import { useState } from 'react'
-import Router from 'next/router'
-import { useUser } from '../lib/hooks'
-import Form from '../components/form'
-import { getGatheringsData } from '../lib/gatherings'
-import Layout, { siteTitle } from '../components/layout'
-import Head from 'next/head'
+import { useState } from "react";
+import Router from "next/router";
+import { useUser } from "../lib/hooks";
+import Form from "../components/form";
+import { getGatheringsData } from "../lib/gatherings";
+import Layout, { siteTitle } from "../components/layout";
+import Head from "next/head";
 
-import { Magic } from 'magic-sdk'
+import { Magic } from "magic-sdk";
 
 const Login = () => {
-  //console.log("dispatchJwtToken: ", getJwtToken('test'));
-  useUser({ redirectTo: '/', redirectIfFound: true })
+  useUser({ redirectTo: "/", redirectIfFound: true });
 
-  const [errorMsg, setErrorMsg] = useState('')
+  const [errorMsg, setErrorMsg] = useState("");
 
   async function handleSubmit(e) {
-    event.preventDefault()
+    e.preventDefault();
 
-    if (errorMsg) setErrorMsg('')
+    if (errorMsg) setErrorMsg("");
 
     const body = {
       email: e.currentTarget.email.value,
-    }
+    };
 
     try {
-      const magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY)
+
+      const magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY);
       const didToken = await magic.auth.loginWithMagicLink({
         email: body.email,
-      })
-      console.log('RESPONSE WHEN LOGGING IN: ', didToken);
-      const res = await fetch('/api/login', {
-        method: 'POST',
+      });
+
+      console.log("DID Token received: ", didToken);
+      const res = await fetch("/api/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + didToken,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + didToken,
         },
         body: JSON.stringify(body),
-      })
+      });
+
       if (res.status === 200) {
-        console.log('SUCCESSFUL LOGIN')
+        console.log("Successfully logged in!");
         // calling strapi api
-        const gatheringsData = await getGatheringsData(didToken)
-        console.log('GATHERING DATA: ', gatheringsData)
+        const gatheringsData = await getGatheringsData(didToken);
+        console.log("Events data from Strapi received: ", gatheringsData);
         Router.push({
-          pathname: '/',
-          query: { data: JSON.stringify(gatheringsData) }
-        })
+          pathname: "/",
+          query: { data: JSON.stringify(gatheringsData) },
+        });
       } else {
-        throw new Error(await res.text())
+        throw new Error(await res.text());
       }
     } catch (error) {
-      console.error('An unexpected error happened occurred:', error)
-      setErrorMsg(error.message)
+      console.error("An unexpected error happened occurred:", error);
+      setErrorMsg(error.message);
     }
   }
 
   return (
     <Layout>
-    <Head>
-      <title>{siteTitle}</title>
-    </Head>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
       <div className="login">
         <Form errorMessage={errorMsg} onSubmit={handleSubmit} />
       </div>
@@ -73,7 +75,7 @@ const Login = () => {
         }
       `}</style>
     </Layout>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

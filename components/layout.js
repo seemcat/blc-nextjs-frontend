@@ -4,14 +4,13 @@ import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
 import Header from './header'
 
-const name = 'Cafe Estela'
-export const siteTitle = '✨Meet at Cafe Estela ☕️'
+const name = 'Blockchain Ladies Club'
+export const siteTitle = 'Blockchain Ladies Club'
 
 export default function Layout({ children, home }) {
   return (
     <div className={styles.container}>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
           content="Learn how to build a personal website using Next.js"
@@ -30,7 +29,7 @@ export default function Layout({ children, home }) {
         {home ? (
           <>
             <img
-              src="/images/cafe-estela.png"
+              src="/images/blockchain-ladies-club-logo.png"
               className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
               alt={name}
             />
@@ -41,7 +40,7 @@ export default function Layout({ children, home }) {
             <Link href="/">
               <a>
                 <img
-                  src="/images/cafe-estela.png"
+                  src="/images/blockchain-ladies-club-logo.png"
                   className={`${styles.headerImage} ${utilStyles.borderCircle}`}
                   alt={name}
                 />
