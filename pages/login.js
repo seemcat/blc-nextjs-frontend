@@ -2,10 +2,9 @@ import { useState } from "react";
 import Router from "next/router";
 import { useUser } from "../lib/hooks";
 import Form from "../components/form";
-import { getGatheringsData } from "../lib/gatherings";
+import { getEventsData } from "../lib/get-events-data";
 import Layout, { siteTitle } from "../components/layout";
 import Head from "next/head";
-
 import { Magic } from "magic-sdk";
 
 const Login = () => {
@@ -29,7 +28,6 @@ const Login = () => {
         email: body.email,
       });
 
-      console.log("DID Token received: ", didToken);
       const res = await fetch("/api/login", {
         method: "POST",
         headers: {
@@ -40,13 +38,10 @@ const Login = () => {
       });
 
       if (res.status === 200) {
-        console.log("Successfully logged in!");
-        // calling strapi api
-        const gatheringsData = await getGatheringsData(didToken);
-        console.log("Events data from Strapi received: ", gatheringsData);
+        const eventsData = await getEventsData(didToken);
         Router.push({
           pathname: "/",
-          query: { data: JSON.stringify(gatheringsData) },
+          query: { data: JSON.stringify(eventsData) },
         });
       } else {
         throw new Error(await res.text());
