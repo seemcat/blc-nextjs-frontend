@@ -4,14 +4,12 @@ This is a Next.js app that integrates with Strapi, a headless CMS, to author dat
 
 Enjoy 🎉
 
+# Demo
+https://nextjs-frontend.herokuapp.com/
+
 ## Getting Started
-
-First, ```yarn install``` and then run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. `gh repo clone seemcat/blc-nextjs-frontend`
+2. `mv .env.example .env`
+3. Create a [**Magic Account**](https://dashboard.magic.link) and grab your Test Publishable Key and Secret Key. Give these values to `NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY` and `MAGIC_SECRET_KEY` in `.env` 
+4. `yarn install`
+5. `yarn dev`
